@@ -2,8 +2,8 @@ import streamlit as st
 import requests
 
 # API Keys
-GEMINI_API_KEY = ""
-NEWS_API_KEY = ""
+GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY", "")
+NEWS_API_KEY = st.secrets.get("NEWS_API_KEY", "")
 
 # Gemini API function
 def ask_gemini(prompt):
