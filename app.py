@@ -55,7 +55,7 @@ st.caption("Hi Cara! 👋 Your personal guide to understanding and building with
 st.markdown("---")
 
 # Tabs
-tab1, tab2, tab3 = st.tabs(["💡 Ask & Learn", "🛠️ POC Ideas", "🤖 Mini QA Bot"])
+tab1, tab2, tab3, tab4 = st.tabs(["💡 Ask & Learn", "🛠️ POC Ideas", "🤖 Mini QA Bot", "🔧 AI Tool Recommender"])
 
 # Tab 1 - Ask & Learn
 with tab1:
@@ -123,3 +123,27 @@ with tab3:
                 st.write(answer)
         else:
             st.warning("Please paste a document and ask a question!")
+# Tab 4 - AI Tool Recommender
+with tab4:
+    st.subheader("AI Tool Recommender")
+    st.markdown("Describe what you want to do and I'll recommend the best AI tool for it.")
+    task_desc = st.text_area("What task do you want to accomplish?",
+                              placeholder="e.g. I want to summarize long engineering reports automatically...")
+    if st.button("Recommend Tools", key="tools"):
+        if task_desc:
+            with st.spinner("Finding best tools..."):
+                prompt = f"""
+                You are an AI tools expert. Based on the task described below, recommend
+                the 3 best AI tools available today. For each tool include:
+                - Tool name
+                - What it does in simple terms
+                - Why it's good for this task
+                - Whether it's free or paid
+                Keep it simple, no technical jargon. The user is a business professional.
+                Task: {task_desc}
+                """
+                answer = ask_gemini(prompt)
+                st.success("Here are the best AI tools for your task:")
+                st.write(answer)
+        else:
+            st.warning("Please describe your task first!")
